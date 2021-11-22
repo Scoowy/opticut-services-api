@@ -13,6 +13,22 @@ public class OptiCutServicesAPI {
         Spark.port(getPort());
 
         Spark.get("/", (request, response) -> "Todo bien!");
+
+        Spark.path("/api", () -> {
+            Spark.path("/products", () -> {
+                Spark.path("/planks", () -> {
+                    Spark.get("", (request, response) -> "Get all Planks");
+                    Spark.post("", (request, response) -> "Nueva plancha");
+                    Spark.delete("", (request, response) -> "Borrar todas las planchas");
+
+                    Spark.path("/:idPlank", () -> {
+                        Spark.get("", (request, response) -> "Obteniendo una plancha");
+                        Spark.put("", (request, response) -> "Actualizando una plancha");
+                        Spark.delete("", (request, response) -> "Eliminando una plancha");
+                    });
+                });
+            });
+        });
     }
 
     static int getPort() {
