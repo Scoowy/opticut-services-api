@@ -1,5 +1,6 @@
 package com.opticortes;
 
+import com.opticortes.controllers.ProductsController;
 import spark.Spark;
 
 /**
@@ -12,12 +13,14 @@ public class OptiCutServicesAPI {
     public static void main(String[] args) {
         Spark.port(getPort());
 
+        ProductsController productsCtrl = new ProductsController();
+
         Spark.get("/", (request, response) -> "Todo bien!");
 
         Spark.path("/api", () -> {
             Spark.path("/products", () -> {
                 Spark.path("/planks", () -> {
-                    Spark.get("", (request, response) -> "Get all Planks");
+                    Spark.get("", productsCtrl::getAll);
                     Spark.post("", (request, response) -> "Nueva plancha");
                     Spark.delete("", (request, response) -> "Borrar todas las planchas");
 
