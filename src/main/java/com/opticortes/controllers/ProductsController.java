@@ -1,5 +1,6 @@
 package com.opticortes.controllers;
 
+import com.opticortes.services.PlanksServices;
 import com.opticortes.utils.ResponseType;
 import spark.Request;
 import spark.Response;
@@ -14,8 +15,9 @@ public class ProductsController implements ICRUDController{
 
     @Override
     public String getAll(Request req, Response res) {
+        PlanksServices planksServices = new PlanksServices();
         res.type(ResponseType.JSON.toString());
-        return gson.toJson("Obteniendo todas las planchas");
+        return gson.toJson(planksServices.getPlanks());
     }
 
     @Override
