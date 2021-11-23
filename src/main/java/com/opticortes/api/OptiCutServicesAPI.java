@@ -1,6 +1,8 @@
 package com.opticortes.api;
 
 import com.opticortes.controllers.ProductsController;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import spark.Spark;
 
 /**
@@ -10,6 +12,9 @@ import spark.Spark;
  * @version 2021.11.22.1544
  */
 public class OptiCutServicesAPI {
+
+    public final static Logger logger = LoggerFactory.getLogger(OptiCutServicesAPI.class);
+
     public static void main(String[] args) {
         Spark.port(getPort());
 
