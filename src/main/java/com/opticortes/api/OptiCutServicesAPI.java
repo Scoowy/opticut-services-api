@@ -1,4 +1,4 @@
-package com.opticortes;
+package com.opticortes.api;
 
 import com.opticortes.controllers.ProductsController;
 import spark.Spark;

@@ -93,7 +93,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.opticortes.OptiCutServicesAPI</mainClass>
+                            <mainClass>com.opticortes.api.OptiCutServicesAPI</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
