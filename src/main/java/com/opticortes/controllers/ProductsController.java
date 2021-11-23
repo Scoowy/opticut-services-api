@@ -1,6 +1,8 @@
 package com.opticortes.controllers;
 
+import com.opticortes.entities.Plank;
 import com.opticortes.services.PlanksServices;
+import com.opticortes.utils.ErrorResponse;
 import com.opticortes.utils.ResponseType;
 import spark.Request;
 import spark.Response;
@@ -32,7 +34,20 @@ public class ProductsController implements ICRUDController{
 
     @Override
     public String getOne(Request req, Response res) {
-        return null;
+        PlanksServices planksServices = new PlanksServices();
+        res.type(ResponseType.JSON.toString());
+
+        System.out.println(req.params("plankId"));
+        int plankId = Integer.parseInt(req.params("plankId"));
+
+        Plank plank = planksServices.getPlank(new Plank(plankId));
+
+        if(plank != null) {
+            return gson.toJson(plank);
+        } else {
+            res.status(404);
+            return gson.toJson(new ErrorResponse(404, "Plank not found"));
+        }
     }
 
     @Override

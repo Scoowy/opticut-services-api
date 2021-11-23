@@ -47,7 +47,15 @@ public class PlanksServices {
     }
 
     public Plank getPlank(Plank plank) {
-        return new Plank();
+        Plank selectedPlank = null;
+
+        try {
+            selectedPlank = new PlankDAO().select(plank);
+        } catch (SQLException e) {
+            OptiCutServicesAPI.logger.error("[ERROR]", e);
+        }
+
+        return selectedPlank;
     }
 
 }
