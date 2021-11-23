@@ -1,4 +1,4 @@
-package com.opticortes.models;
+package com.opticortes.entities;
 
 import java.util.StringJoiner;
 
