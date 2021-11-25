@@ -29,13 +29,6 @@ public class PlanksServices {
         return planks;
     }
 
-    public List<Plank> getPlanks(String query) {
-        List<Plank> planks = new ArrayList<>();
-        // Recuperacion de la BD
-        // Bla
-        return planks;
-    }
-
     public Plank getPlank(Plank plank) {
         Plank selectedPlank = null;
 
