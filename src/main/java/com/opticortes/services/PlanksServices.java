@@ -22,19 +22,9 @@ public class PlanksServices {
     public List<Plank> getPlanks() {
         List<Plank> planks = new ArrayList<>();
         try {
-            conn = ConnectionSQL.getConnection();
-            if (conn.getAutoCommit()) {
-                conn.setAutoCommit(false);
-            }
-            planks = new PlankDAO(conn).selectAll();
-            conn.commit();
+            planks = new PlankDAO().selectAll();
         } catch (SQLException e) {
             OptiCutServicesAPI.logger.error("[ERROR]:", e);
-            try {
-                conn.rollback();
-            } catch (SQLException ex) {
-                OptiCutServicesAPI.logger.error("[ERROR]:", e);
-            }
         }
         return planks;
     }
