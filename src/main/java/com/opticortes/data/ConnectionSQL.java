@@ -33,6 +33,24 @@ public class ConnectionSQL {
         return getDataSource().getConnection();
     }
 
+    public static void disableAutoCommit(Connection conn) {
+        try {
+            if (conn.getAutoCommit()) {
+                conn.setAutoCommit(false);
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
+    public static void rollback(Connection conn) {
+        try {
+            conn.rollback();
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+        }
+    }
+
     public static void close(ResultSet rs) {
         try {
             rs.close();
