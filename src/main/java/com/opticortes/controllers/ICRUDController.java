@@ -1,6 +1,5 @@
 package com.opticortes.controllers;
 
-import com.google.gson.Gson;
 import spark.Request;
 import spark.Response;
 
@@ -11,7 +10,7 @@ import spark.Response;
  * @version 2021.11.22.1636
  */
 public interface ICRUDController {
-    Gson gson = new Gson();
+//    Gson gson = new Gson();
 
     String getAll(Request req, Response res);
 

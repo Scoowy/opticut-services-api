@@ -1,5 +1,9 @@
 package com.opticortes.controllers;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.opticortes.api.OptiCutServicesAPI;
+import com.opticortes.dao.PlankAdapter;
 import com.opticortes.entities.Plank;
 import com.opticortes.services.PlanksServices;
 import com.opticortes.utils.ErrorResponse;
@@ -14,6 +18,15 @@ import spark.Response;
  * @version 2021.11.22.1607
  */
 public class ProductsController implements ICRUDController{
+
+    Gson gson = null;
+    GsonBuilder builder = new GsonBuilder();
+    PlanksServices planksServices = new PlanksServices();
+
+    public ProductsController () {
+        builder.registerTypeAdapter(Plank.class, new PlankAdapter());
+        gson = builder.create();
+    }
 
     @Override
     public String getAll(Request req, Response res) {
