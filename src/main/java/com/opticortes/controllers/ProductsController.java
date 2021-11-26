@@ -37,7 +37,17 @@ public class ProductsController implements ICRUDController {
 
     @Override
     public String deleteAll(Request req, Response res) {
-        return null;
+        res.type(ResponseType.JSON.toString());
+
+        int rowsAffected = planksServices.deletePlanks();
+
+        if (rowsAffected != 0) {
+            res.status(201);
+            return gson.toJson(new OkResponse(201, "Deleted %d planks".formatted(rowsAffected)));
+        } else {
+            res.status(404);
+            return gson.toJson(new ErrorResponse(404, "Planks not deleted"));
+        }
     }
 
     @Override

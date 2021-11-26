@@ -25,6 +25,7 @@ public class PlankDAO implements ICRUD<Plank> {
     private static final String SQL_INSERT = "INSERT INTO planks(name, height, width, density, active) VALUES(?, ?, ?, ?, ?)";
     private static final String SQL_UPDATE = "UPDATE planks SET name = ?, height = ?, width = ?, density = ?, active = ? WHERE id = ?";
     private static final String SQL_DELETE = "DELETE FROM planks WHERE id = ?";
+    private static final String SQL_DELETE_ALL = "DELETE FROM planks";
 
     public PlankDAO() {
     }
@@ -74,7 +75,26 @@ public class PlankDAO implements ICRUD<Plank> {
 
     @Override
     public int deleteAll() throws SQLException {
-        return 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rowsAffected;
+
+        try {
+            conn = this.conn != null ? this.conn : ConnectionSQL.getConnection();
+            stmt = conn.prepareStatement(SQL_DELETE_ALL);
+
+            OptiCutServicesAPI.logger.info("[QUERY]: {}", stmt);
+
+            rowsAffected = stmt.executeUpdate();
+        } finally {
+            ConnectionSQL.close(stmt);
+
+            if (this.conn == null) {
+                ConnectionSQL.close(conn);
+            }
+        }
+
+        return rowsAffected;
     }
 
     @Override
