@@ -103,6 +103,19 @@ public class ProductsController implements ICRUDController {
 
     @Override
     public String deleteOne(Request req, Response res) {
-        return null;
+        res.type(ResponseType.JSON.toString());
+
+        OptiCutServicesAPI.logger.info("[PARAMS]: {}", req.params("plankId"));
+        int plankId = Integer.parseInt(req.params("plankId"));
+
+        int rowsAffected = planksServices.deletePlank(new Plank(plankId));
+
+        if (rowsAffected != 0) {
+            res.status(201);
+            return gson.toJson(new OkResponse(201, "Plank deleted"));
+        } else {
+            res.status(404);
+            return gson.toJson(new ErrorResponse(404, "Plank not deleted"));
+        }
     }
 }

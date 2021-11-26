@@ -183,6 +183,28 @@ public class PlankDAO implements ICRUD<Plank> {
 
     @Override
     public int delete(Plank entity) throws SQLException {
-        return 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rowsAffected;
+
+        try {
+            conn = this.conn != null ? this.conn : ConnectionSQL.getConnection();
+            stmt = conn.prepareStatement(SQL_DELETE);
+
+            stmt.setInt(1, entity.getId());
+
+            OptiCutServicesAPI.logger.info("[QUERY]: {}", stmt);
+
+            rowsAffected = stmt.executeUpdate();
+
+        } finally {
+            ConnectionSQL.close(stmt);
+
+            if (this.conn == null) {
+                ConnectionSQL.close(conn);
+            }
+        }
+
+        return rowsAffected;
     }
 }

@@ -32,7 +32,7 @@ public class OptiCutServicesAPI {
                     Spark.path("/:plankId", () -> {
                         Spark.get("", productsCtrl::getOne);
                         Spark.put("", productsCtrl::updateOne);
-                        Spark.delete("", (request, response) -> "Eliminando una plancha");
+                        Spark.delete("", productsCtrl::deleteOne);
                     });
                 });
             });
