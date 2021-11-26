@@ -23,7 +23,20 @@ public class PlankAdapter implements JsonSerializer<Plank>, JsonDeserializer<Pla
 
     @Override
     public JsonElement serialize(Plank plank, Type type, JsonSerializationContext context) {
-        return null;
+        JsonObject plankJson = new JsonObject();
+
+        plankJson.addProperty(ID, plank.getId());
+        plankJson.addProperty(NAME, plank.getName());
+        plankJson.addProperty(ACTIVE, plank.isActive());
+
+        JsonObject dimensionsJson = new JsonObject();
+        dimensionsJson.addProperty(HEIGHT, plank.getHeight());
+        dimensionsJson.addProperty(WIDTH, plank.getWidth());
+        dimensionsJson.addProperty(DENSITY, plank.getDensity());
+
+        plankJson.add(DIMENSIONS, dimensionsJson);
+
+        return plankJson;
     }
 
     @Override
