@@ -26,7 +26,7 @@ public class OptiCutServicesAPI {
             Spark.path("/products", () -> {
                 Spark.path("/planks", () -> {
                     Spark.get("", productsCtrl::getAll);
-                    Spark.post("", (request, response) -> "Nueva plancha");
+                    Spark.post("", productsCtrl::addNew);
                     Spark.delete("", (request, response) -> "Borrar todas las planchas");
 
                     Spark.path("/:plankId", () -> {

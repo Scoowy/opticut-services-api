@@ -7,6 +7,7 @@ import com.opticortes.dao.PlankAdapter;
 import com.opticortes.entities.Plank;
 import com.opticortes.services.PlanksServices;
 import com.opticortes.utils.ErrorResponse;
+import com.opticortes.utils.OkResponse;
 import com.opticortes.utils.ResponseType;
 import spark.Request;
 import spark.Response;
@@ -30,7 +31,6 @@ public class ProductsController implements ICRUDController{
 
     @Override
     public String getAll(Request req, Response res) {
-        PlanksServices planksServices = new PlanksServices();
         res.type(ResponseType.JSON.toString());
         return gson.toJson(planksServices.getPlanks());
     }
@@ -42,12 +42,26 @@ public class ProductsController implements ICRUDController{
 
     @Override
     public String addNew(Request req, Response res) {
-        return null;
+        res.type(ResponseType.JSON.toString());
+
+        String body = req.body();
+        Plank plank = gson.fromJson(body, Plank.class);
+
+        OptiCutServicesAPI.logger.info("[New Plank]: {}", plank);
+
+        int rowsAffected = planksServices.addNewPlank(plank);
+
+        if (rowsAffected != 0) {
+            res.status(201);
+            return gson.toJson(new OkResponse(201, "Plank created"));
+        } else {
+            res.status(404);
+            return gson.toJson(new ErrorResponse(404, "Plank not created"));
+        }
     }
 
     @Override
     public String getOne(Request req, Response res) {
-        PlanksServices planksServices = new PlanksServices();
         res.type(ResponseType.JSON.toString());
 
         System.out.println(req.params("plankId"));

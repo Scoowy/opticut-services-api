@@ -41,4 +41,23 @@ public class PlanksServices {
         return selectedPlank;
     }
 
+    public int addNewPlank(Plank plank) {
+        try {
+            conn = ConnectionSQL.getConnection();
+            ConnectionSQL.disableAutoCommit(conn);
+            PlankDAO plankDAO = new PlankDAO(conn);
+            int rows = plankDAO.insert(plank);
+            conn.commit();
+
+            return rows;
+        } catch (SQLException e) {
+            OptiCutServicesAPI.logger.error("[ERROR]:", e);
+            ConnectionSQL.rollback(conn);
+            OptiCutServicesAPI.logger.info("[JDBC]: Ejecutado rollback");
+
+            return 0;
+        }
+
+    }
+
 }
