@@ -48,15 +48,14 @@ public class PlankDAO implements ICRUD<Plank> {
 
             res = stmt.executeQuery();
 
-            for (ResultSet rs : List.of(res)) {
-                rs.next();
+            while (res.next()) {
                 Plank plank = new Plank(
-                        rs.getInt("id"),
-                        rs.getString("name"),
-                        rs.getDouble("height"),
-                        rs.getDouble("width"),
-                        rs.getDouble("density"),
-                        rs.getBoolean("active")
+                        res.getInt("id"),
+                        res.getString("name"),
+                        res.getDouble("height"),
+                        res.getDouble("width"),
+                        res.getDouble("density"),
+                        res.getBoolean("active")
                 );
                 planks.add(plank);
             }
