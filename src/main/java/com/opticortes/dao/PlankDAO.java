@@ -151,7 +151,34 @@ public class PlankDAO implements ICRUD<Plank> {
 
     @Override
     public int update(Plank entity) throws SQLException {
-        return 0;
+        Connection conn = null;
+        PreparedStatement stmt = null;
+        int rowsAffected;
+
+        try {
+            conn = this.conn != null ? this.conn : ConnectionSQL.getConnection();
+            stmt = conn.prepareStatement(SQL_UPDATE);
+
+            stmt.setString(1, entity.getName());
+            stmt.setDouble(2, entity.getHeight());
+            stmt.setDouble(3, entity.getWidth());
+            stmt.setDouble(4, entity.getDensity());
+            stmt.setBoolean(5, entity.isActive());
+            stmt.setInt(6, entity.getId());
+
+            OptiCutServicesAPI.logger.info("[QUERY]: {}", stmt);
+
+            rowsAffected = stmt.executeUpdate();
+
+        } finally {
+            ConnectionSQL.close(stmt);
+
+            if (this.conn == null) {
+                ConnectionSQL.close(conn);
+            }
+        }
+
+        return rowsAffected;
     }
 
     @Override

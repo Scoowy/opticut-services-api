@@ -18,13 +18,13 @@ import spark.Response;
  * @author Scoowy
  * @version 2021.11.22.1607
  */
-public class ProductsController implements ICRUDController{
+public class ProductsController implements ICRUDController {
 
-    Gson gson = null;
+    Gson gson;
     GsonBuilder builder = new GsonBuilder();
     PlanksServices planksServices = new PlanksServices();
 
-    public ProductsController () {
+    public ProductsController() {
         builder.registerTypeAdapter(Plank.class, new PlankAdapter());
         gson = builder.create();
     }
@@ -69,7 +69,7 @@ public class ProductsController implements ICRUDController{
 
         Plank plank = planksServices.getPlank(new Plank(plankId));
 
-        if(plank != null) {
+        if (plank != null) {
             return gson.toJson(plank);
         } else {
             res.status(404);
@@ -79,7 +79,26 @@ public class ProductsController implements ICRUDController{
 
     @Override
     public String updateOne(Request req, Response res) {
-        return null;
+        res.type(ResponseType.JSON.toString());
+
+        OptiCutServicesAPI.logger.info("[PARAMS]: {}", req.params("plankId"));
+        int plankId = Integer.parseInt(req.params("plankId"));
+
+        String body = req.body();
+        Plank plank = gson.fromJson(body, Plank.class);
+        plank.setId(plankId);
+
+        OptiCutServicesAPI.logger.info("[Update Plank]: {}", plank);
+
+        int rowsAffected = planksServices.updatePlank(plank);
+
+        if (rowsAffected != 0) {
+            res.status(201);
+            return gson.toJson(new OkResponse(201, "Plank updated"));
+        } else {
+            res.status(404);
+            return gson.toJson(new ErrorResponse(404, "Plank not updated"));
+        }
     }
 
     @Override
