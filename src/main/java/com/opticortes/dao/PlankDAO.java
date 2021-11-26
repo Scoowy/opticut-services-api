@@ -43,7 +43,9 @@ public class PlankDAO implements ICRUD<Plank> {
         try {
             conn = this.conn != null ? this.conn : ConnectionSQL.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT);
-            OptiCutServicesAPI.logger.info("[QUERY]: {}", SQL_SELECT);
+
+            OptiCutServicesAPI.logger.info("[QUERY]: {}", stmt);
+
             res = stmt.executeQuery();
 
             for (ResultSet rs : List.of(res)) {
@@ -86,10 +88,11 @@ public class PlankDAO implements ICRUD<Plank> {
         try {
             conn = this.conn != null ? this.conn : ConnectionSQL.getConnection();
             stmt = conn.prepareStatement(SQL_SELECT_ONE);
-            OptiCutServicesAPI.logger.info("[QUERY]: {}", SQL_SELECT_ONE);
 
             stmt.setInt(1, entity.getId());
-            System.out.println(stmt);
+
+            OptiCutServicesAPI.logger.info("[QUERY]: {}", stmt);
+
             res = stmt.executeQuery();
 
             res.next();
