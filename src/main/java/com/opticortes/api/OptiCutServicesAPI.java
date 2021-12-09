@@ -18,7 +18,16 @@ public class OptiCutServicesAPI {
     public final static Logger logger = LoggerFactory.getLogger(OptiCutServicesAPI.class);
 
     public static void main(String[] args) {
+        // Handler the error at init the Jetty Server
+        Spark.initExceptionHandler(e -> {
+            logger.error("[INIT ERROR]", e);
+            System.exit(100);
+        });
+
+        // Set the port
         Spark.port(getPort());
+        // Init manually the server
+        Spark.init();
 
         // Adding the controllers
         ProductsController productsCtrl = new ProductsController();
@@ -30,6 +39,7 @@ public class OptiCutServicesAPI {
         // Todo: Return JSON of the API
         Spark.get("/", (request, response) -> "Todo bien!");
 
+        // Routes of API
         Spark.path("/api", () -> {
             Spark.path("/products", () -> {
                 Spark.path("/planks", () -> {
