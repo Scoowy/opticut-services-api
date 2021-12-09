@@ -1,5 +1,6 @@
 package com.opticortes.api;
 
+import com.opticortes.controllers.GenericController;
 import com.opticortes.controllers.ProductsController;
 import com.opticortes.middlewares.CorsFilter;
 import org.slf4j.Logger;
@@ -19,7 +20,9 @@ public class OptiCutServicesAPI {
     public static void main(String[] args) {
         Spark.port(getPort());
 
+        // Adding the controllers
         ProductsController productsCtrl = new ProductsController();
+        GenericController genericCtrl = new GenericController();
 
         // Set CORS
         Spark.before(new CorsFilter());
@@ -42,6 +45,12 @@ public class OptiCutServicesAPI {
                 });
             });
         });
+
+        // Default route in not found resource
+        Spark.notFound(genericCtrl::resourceNotFound);
+
+        // Default route in unknown error occurring
+        Spark.internalServerError(genericCtrl::unknownError);
     }
 
     static int getPort() {
