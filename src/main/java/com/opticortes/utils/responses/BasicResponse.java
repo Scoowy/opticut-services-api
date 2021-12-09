@@ -44,7 +44,7 @@ public class BasicResponse {
 
     @Override
     public String toString() {
-        return new StringJoiner(", ", ErrorResponse.class.getSimpleName() + "[", "]")
+        return new StringJoiner(", ", BasicResponse.class.getSimpleName() + "[", "]")
                 .add("code=" + code)
                 .add("message='" + message + "'")
                 .add("status='" + status + "'")
