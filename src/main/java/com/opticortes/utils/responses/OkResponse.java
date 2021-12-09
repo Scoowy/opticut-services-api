@@ -1,4 +1,4 @@
-package com.opticortes.utils;
+package com.opticortes.utils.responses;
 
 /**
  * Class
