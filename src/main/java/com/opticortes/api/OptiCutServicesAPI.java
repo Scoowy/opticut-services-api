@@ -1,6 +1,7 @@
 package com.opticortes.api;
 
 import com.opticortes.controllers.ProductsController;
+import com.opticortes.middlewares.CorsFilter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
@@ -20,6 +21,10 @@ public class OptiCutServicesAPI {
 
         ProductsController productsCtrl = new ProductsController();
 
+        // Set CORS
+        Spark.before(new CorsFilter());
+
+        // Todo: Return JSON of the API
         Spark.get("/", (request, response) -> "Todo bien!");
 
         Spark.path("/api", () -> {
