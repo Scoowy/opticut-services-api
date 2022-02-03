@@ -3,6 +3,7 @@ package com.opticortes.api;
 import com.opticortes.controllers.GenericController;
 import com.opticortes.controllers.ProductsController;
 import com.opticortes.middlewares.CorsFilter;
+import com.opticortes.routes.PlankRoutes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import spark.Spark;
@@ -29,8 +30,7 @@ public class OptiCutServicesAPI {
         // Init manually the server
         Spark.init();
 
-        // Adding the controllers
-        ProductsController productsCtrl = new ProductsController();
+        // Adding the generic controllers
         GenericController genericCtrl = new GenericController();
 
         // Set CORS
@@ -42,17 +42,7 @@ public class OptiCutServicesAPI {
         // Routes of API
         Spark.path("/api", () -> {
             Spark.path("/products", () -> {
-                Spark.path("/planks", () -> {
-                    Spark.get("", productsCtrl::getAll);
-                    Spark.post("", productsCtrl::addNew);
-                    Spark.delete("", productsCtrl::deleteAll);
-
-                    Spark.path("/:plankId", () -> {
-                        Spark.get("", productsCtrl::getOne);
-                        Spark.put("", productsCtrl::updateOne);
-                        Spark.delete("", productsCtrl::deleteOne);
-                    });
-                });
+                Spark.path("/planks", new PlankRoutes());
             });
         });
 
