@@ -13,7 +13,7 @@ import java.sql.*;
  * @version 2021.11.22.2005
  */
 public class ConnectionSQL {
-    private static final String JDBC_URL = "jdbc:mysql://" + ConfigDB.DB_URL + "/sys?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true";
+    private static final String JDBC_URL = "jdbc:mysql://%s:%s/%s?useSSL=false&useTimezone=true&serverTimezone=UTC&allowPublicKeyRetrieval=true".formatted(ConfigDB.DB_HOST, ConfigDB.DB_PORT, ConfigDB.DB_DATABASE);
     private static final String JDBC_USER = ConfigDB.DB_USER;
     private static final String JDBC_PASSWORD = ConfigDB.DB_PASSWORD;
     private static BasicDataSource dataSource;
@@ -75,7 +75,7 @@ public class ConnectionSQL {
         }
     }
 
-    public static void close(Connection conn) throws SQLException {
+    public static void close(Connection conn) {
         try {
             conn.close();
         } catch (SQLException ex) {
